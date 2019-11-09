@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/208894039.svg)](https://zenodo.org/badge/latestdoi/208894039)
+
 # Unprofessional peer reviews disproportionately harm underrepresented groups in STEM
 
 ### Authors: Nyssa J. Silbiger & Amber D. Stubler
