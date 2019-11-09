@@ -2,7 +2,7 @@
 
 ### Authors: Nyssa J. Silbiger & Amber D Stubler
 
-### Journal:  
+### Journal: *PeerJ*
 
 ### Link: *in review*
 
