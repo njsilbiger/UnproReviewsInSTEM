@@ -1,6 +1,6 @@
 # Unprofessional peer reviews disproportionately harm underrepresented groups in STEM
 
-### Authors: Nyssa J. Silbiger & Amber D Stubler
+### Authors: Nyssa J. Silbiger & Amber D. Stubler
 
 ### Journal: *PeerJ*
 
