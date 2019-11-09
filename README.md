@@ -1,4 +1,4 @@
-# Unprofessional peer reviews perpetuates gap for underrepresented groups in science
+# Unprofessional peer reviews disproportionately harm underrepresented groups in STEM
 
 ### Authors: Nyssa J. Silbiger & Amber D Stubler
 
