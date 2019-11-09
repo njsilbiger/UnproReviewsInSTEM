@@ -1,23 +1,30 @@
 Unprofessional Reviews
 ================
-Dr. Nyssa Silbiger and Dr. Amber Stubler
-September 16, 2019
+Dr. Nyssa Silbiger and Dr. Amber Stubler
+November 08, 2019
 
--   [Metadata.](#metadata.)
--   [Demographic Info.](#demographic-info.)
--   [How many Countries participated?](#how-many-countries-participated)
--   [Broad areas of expertise](#broad-areas-of-expertise)
--   [Have you ever received an unpro review?](#have-you-ever-received-an-unpro-review)
--   [Logisitic regression on probability of recieving an unpro review](#logisitic-regression-on-probability-of-recieving-an-unpro-review)
--   [Table of all raw data by all genders](#table-of-all-raw-data-by-all-genders)
--   [Table with sample size for each group](#table-with-sample-size-for-each-group)
--   [BRMS for Scientific aptitude](#brms-for-scientific-aptitude)
--   [BRMS analysis for Scientific Productivity](#brms-analysis-for-scientific-productivity)
--   [BRMS analysis for Career Advancement](#brms-analysis-for-career-advancement)
--   [Posterior predictive checks of each model](#posterior-predictive-checks-of-each-model)
--   [What percent of people received more than one review](#what-percent-of-people-received-more-than-one-review)
+  - [Metadata.](#metadata.)
+  - [Demographic Info.](#demographic-info.)
+  - [How many Countries participated?](#how-many-countries-participated)
+  - [Broad areas of expertise](#broad-areas-of-expertise)
+  - [Have you ever received an unpro
+    review?](#have-you-ever-received-an-unpro-review)
+  - [Logisitic regression on probability of recieving an unpro
+    review](#logisitic-regression-on-probability-of-recieving-an-unpro-review)
+  - [Table of all raw data by all
+    genders](#table-of-all-raw-data-by-all-genders)
+  - [Table with sample size for each
+    group](#table-with-sample-size-for-each-group)
+  - [Posterior predictive checks of each
+    model](#posterior-predictive-checks-of-each-model)
+  - [What percent of people received more than one
+    review](#what-percent-of-people-received-more-than-one-review)
+  - [What percent of people with unpro reviews had them in a journal
+    with open
+    review](#what-percent-of-people-with-unpro-reviews-had-them-in-a-journal-with-open-review)
 
-This is an IRB approved project lead by Drs. Amber Stubler and Nyssa Silbiger on the effects of unprofessional peer reviews in STEM fields.
+This is an IRB approved project lead by Drs. Amber Stubler and Nyssa
+Silbiger on the effects of unprofessional peer reviews in STEM fields.
 
 ``` r
 # read in libraries
@@ -49,7 +56,8 @@ library(RColorBrewer)
 library(gridGraphics)
 ```
 
-First, we will read in the data and make a data dictionary of all the questions from the Qualtrics survey
+First, we will read in the data and make a data dictionary of all the
+questions from the Qualtrics survey
 
 ``` r
 #read in the data
@@ -58,16 +66,14 @@ data<-read.csv('Data/Unprofessional peer reviews_May 10, 2019_14.13.csv')
 metadata<-read.csv('Data/Metadata.csv')
 ```
 
-Metadata.
-=========
+# Metadata.
 
 ``` r
 metadata<-t(metadata[,12:45])
 metadata<-data.frame(cbind(rownames(metadata),as.character(metadata[,1])))
 ```
 
-Demographic Info.
-=================
+# Demographic Info.
 
 ``` r
 # Gender
@@ -153,8 +159,7 @@ p<-round((Career$n/sum(Career$n))*100,1)
 names(career)<-paste0(Career$Q3,'\n(',p,'%)') # rename labels with the percent
 ```
 
-How many Countries participated?
-================================
+# How many Countries participated?
 
 ``` r
 countries<-unique(data$Q8) 
@@ -226,10 +231,9 @@ mapplot<-ggplot(map_countries, aes( x = long, y = lat, group = group )) +
 mapplot
 ```
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-Broad areas of expertise
-========================
+# Broad areas of expertise
 
 ``` r
 # People could pick multiples so need to split by comma then calculate percentage for each group
@@ -285,14 +289,13 @@ doughnut(x = expert$n, labels = expert$group, col = tol21rainbow, outer.radius =
 
     ## Warning in rep(lty, length.out = nx): 'x' is NULL so the result will be
     ## NULL
-
+    
     ## Warning in rep(lty, length.out = nx): 'x' is NULL so the result will be
     ## NULL
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-Have you ever received an unpro review?
-=======================================
+# Have you ever received an unpro review?
 
 ``` r
 #Unpro reviews
@@ -308,8 +311,7 @@ print(paste(round(perUnpro,1), '% received unprofessional review'))
 
     ## [1] "58 % received unprofessional review"
 
-Logisitic regression on probability of recieving an unpro review
-================================================================
+# Logisitic regression on probability of recieving an unpro review
 
 ``` r
 # remove  all data where "I prefer not to say"
@@ -324,8 +326,7 @@ QCData<-data[-r,]
 QCData<-droplevels(QCData)  
 ```
 
-Table of all raw data by all genders
-====================================
+# Table of all raw data by all genders
 
 ``` r
 # Aptitude
@@ -485,10 +486,9 @@ ggplot(data = log.data, aes(group(race)))+
   ggsave('Output/Logisticplot.pdf', width = 7, height = 4, device = 'pdf')
 ```
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-Table with sample size for each group
-=====================================
+# Table with sample size for each group
 
 ``` r
 # Clean the data frame to just include those that recieved an unpro review
@@ -516,20 +516,21 @@ UnproReviews<-QCData %>%
 kable(samplesize, caption = "Sample size for groups that recieved unprofessional reviews")
 ```
 
-| Group                     |    n|
-|:--------------------------|----:|
-| Gender Men                |  248|
+| Group                     |   n |
+| :------------------------ | --: |
+| Gender Men                | 248 |
 | Gender Women              |     |
 | & Non-binary 370          |     |
-| intersect Non-White Men   |   52|
-| intersect Non-White Women |   68|
-| intersect White Men       |  196|
-| intersect White Women     |  302|
-| race Non-White            |  120|
-| race White                |  498|
+| intersect Non-White Men   |  52 |
+| intersect Non-White Women |  68 |
+| intersect White Men       | 196 |
+| intersect White Women     | 302 |
+| race Non-White            | 120 |
+| race White                | 498 |
 
-BRMS for Scientific aptitude
-============================
+Sample size for groups that recieved unprofessional reviews
+
+\#BRMS for Scientific aptitude
 
 ``` r
 # run a bayseian oridnal logisitic model cumulative distribution 
@@ -569,8 +570,7 @@ aptplot<-UnproReviews %>%
         axis.text.x=element_blank())
 ```
 
-BRMS analysis for Scientific Productivity
-=========================================
+\#BRMS analysis for Scientific Productivity
 
 ``` r
 # model changes in productivity
@@ -603,8 +603,7 @@ prodplot<-UnproReviews %>%
         axis.text.x=element_blank())
 ```
 
-BRMS analysis for Career Advancement
-====================================
+\#BRMS analysis for Career Advancement
 
 ``` r
 # model career delayed?
@@ -644,12 +643,12 @@ ggsave(filename = "Output/resultsplot.pdf", plot = resultsplot, width = 8, heigh
 resultsplot
 ```
 
-![](UnproReviews_scripts_files/figure-markdown_github/fig9a,-1.png)
+![](UnproReviews_scripts_files/figure-gfm/fig9a,-1.png)<!-- -->
 
-Posterior predictive checks of each model
-=========================================
+# Posterior predictive checks of each model
 
-really good agreement with observed (y) versus predicted data (yrep)
+really good agreement with observed (y) versus predicted data
+(yrep)
 
 ``` r
 pp_check(fita, type = "bars") # aptitude
@@ -657,7 +656,7 @@ pp_check(fita, type = "bars") # aptitude
 
     ## Using 10 posterior samples for ppc type 'bars' by default.
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 pp_check(fitp, type = "bars") # productivity
@@ -665,7 +664,7 @@ pp_check(fitp, type = "bars") # productivity
 
     ## Using 10 posterior samples for ppc type 'bars' by default.
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-10-2.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
 
 ``` r
 pp_check(fitc, type = "bars") # career delay
@@ -673,7 +672,7 @@ pp_check(fitc, type = "bars") # career delay
 
     ## Using 10 posterior samples for ppc type 'bars' by default.
 
-![](UnproReviews_scripts_files/figure-markdown_github/unnamed-chunk-10-3.png)
+![](UnproReviews_scripts_files/figure-gfm/unnamed-chunk-10-3.png)<!-- -->
 
 ``` r
 # Create a large table with all the probablilities
@@ -692,12 +691,12 @@ aptdata<-UnproReviews %>%
 kable(aptdata, label = 'Aptitude median probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.23|  0.20|  0.22|  0.20|  0.14|
-|     2| White Women     |  0.20|  0.19|  0.23|  0.22|  0.17|
-|     3| Non-White Men   |  0.30|  0.22|  0.21|  0.16|  0.10|
-|     4| White Men       |  0.40|  0.23|  0.18|  0.12|  0.07|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.23 | 0.20 | 0.22 | 0.20 | 0.14 |
+|    2 | White Women     | 0.20 | 0.19 | 0.23 | 0.22 | 0.17 |
+|    3 | Non-White Men   | 0.30 | 0.22 | 0.21 | 0.16 | 0.10 |
+|    4 | White Men       | 0.40 | 0.23 | 0.18 | 0.12 | 0.07 |
 
 ``` r
 aptdata.lower<-UnproReviews %>%
@@ -714,12 +713,12 @@ aptdata.lower<-UnproReviews %>%
 kable(aptdata.lower, label = 'Aptitude lower probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.16|  0.16|  0.19|  0.15|  0.09|
-|     2| White Women     |  0.16|  0.16|  0.19|  0.18|  0.13|
-|     3| Non-White Men   |  0.20|  0.18|  0.17|  0.11|  0.06|
-|     4| White Men       |  0.34|  0.19|  0.15|  0.09|  0.05|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.16 | 0.16 | 0.19 | 0.15 | 0.09 |
+|    2 | White Women     | 0.16 | 0.16 | 0.19 | 0.18 | 0.13 |
+|    3 | Non-White Men   | 0.21 | 0.18 | 0.17 | 0.11 | 0.06 |
+|    4 | White Men       | 0.34 | 0.19 | 0.15 | 0.09 | 0.05 |
 
 ``` r
 aptdata.upper<-UnproReviews %>%
@@ -736,12 +735,12 @@ aptdata.upper<-UnproReviews %>%
 kable(aptdata.upper, label = 'Aptitude upper probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.31|  0.24|  0.26|  0.26|  0.21|
-|     2| White Women     |  0.24|  0.22|  0.26|  0.26|  0.20|
-|     3| Non-White Men   |  0.42|  0.26|  0.25|  0.22|  0.17|
-|     4| White Men       |  0.47|  0.27|  0.21|  0.15|  0.09|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.31 | 0.24 | 0.26 | 0.26 | 0.21 |
+|    2 | White Women     | 0.24 | 0.22 | 0.26 | 0.26 | 0.20 |
+|    3 | Non-White Men   | 0.42 | 0.26 | 0.25 | 0.22 | 0.16 |
+|    4 | White Men       | 0.47 | 0.26 | 0.22 | 0.15 | 0.09 |
 
 ``` r
 #productivity
@@ -759,12 +758,12 @@ proddata<-UnproReviews %>%
 kable(proddata, label = 'Productivity median probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.17|  0.19|  0.27|  0.22|  0.16|
-|     2| White Women     |  0.19|  0.20|  0.27|  0.20|  0.13|
-|     3| Non-White Men   |  0.21|  0.21|  0.26|  0.18|  0.12|
-|     4| White Men       |  0.35|  0.25|  0.22|  0.12|  0.06|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.17 | 0.19 | 0.27 | 0.21 | 0.16 |
+|    2 | White Women     | 0.19 | 0.20 | 0.27 | 0.20 | 0.13 |
+|    3 | Non-White Men   | 0.21 | 0.21 | 0.26 | 0.18 | 0.12 |
+|    4 | White Men       | 0.35 | 0.25 | 0.22 | 0.12 | 0.06 |
 
 ``` r
 proddata.lower<-UnproReviews %>%
@@ -781,12 +780,12 @@ proddata.lower<-UnproReviews %>%
 kable(proddata.lower, label = 'Aptitude lower probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.11|  0.14|  0.23|  0.16|  0.10|
-|     2| White Women     |  0.16|  0.17|  0.23|  0.17|  0.10|
-|     3| Non-White Men   |  0.14|  0.16|  0.22|  0.13|  0.07|
-|     4| White Men       |  0.29|  0.21|  0.19|  0.09|  0.05|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.12 | 0.15 | 0.23 | 0.17 | 0.11 |
+|    2 | White Women     | 0.16 | 0.17 | 0.23 | 0.16 | 0.10 |
+|    3 | Non-White Men   | 0.14 | 0.16 | 0.22 | 0.13 | 0.07 |
+|    4 | White Men       | 0.29 | 0.21 | 0.19 | 0.09 | 0.05 |
 
 ``` r
 proddata.upper<-UnproReviews %>%
@@ -803,12 +802,12 @@ proddata.upper<-UnproReviews %>%
 kable(proddata.upper, label = 'Aptitude upper probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.24|  0.23|  0.31|  0.27|  0.22|
-|     2| White Women     |  0.23|  0.24|  0.31|  0.24|  0.17|
-|     3| Non-White Men   |  0.32|  0.26|  0.30|  0.25|  0.19|
-|     4| White Men       |  0.41|  0.28|  0.26|  0.15|  0.09|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.24 | 0.23 | 0.30 | 0.27 | 0.22 |
+|    2 | White Women     | 0.23 | 0.24 | 0.30 | 0.24 | 0.17 |
+|    3 | Non-White Men   | 0.32 | 0.26 | 0.30 | 0.25 | 0.19 |
+|    4 | White Men       | 0.41 | 0.28 | 0.26 | 0.15 | 0.09 |
 
 ``` r
 # career
@@ -826,12 +825,12 @@ careerdata<-UnproReviews %>%
 kable(careerdata, label = 'Career median probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.22|  0.19|  0.21|  0.18|  0.20|
-|     2| White Women     |  0.38|  0.22|  0.18|  0.12|  0.10|
-|     3| Non-White Men   |  0.40|  0.22|  0.17|  0.11|  0.09|
-|     4| White Men       |  0.49|  0.21|  0.15|  0.08|  0.07|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.22 | 0.19 | 0.21 | 0.18 | 0.20 |
+|    2 | White Women     | 0.38 | 0.22 | 0.18 | 0.12 | 0.10 |
+|    3 | Non-White Men   | 0.40 | 0.22 | 0.17 | 0.11 | 0.09 |
+|    4 | White Men       | 0.49 | 0.21 | 0.15 | 0.08 | 0.07 |
 
 ``` r
 careerdata.lower<-UnproReviews %>%
@@ -848,12 +847,12 @@ careerdata.lower<-UnproReviews %>%
 kable(careerdata.lower, label = 'Aptitude lower probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.15|  0.15|  0.18|  0.13|  0.13|
-|     2| White Women     |  0.33|  0.19|  0.15|  0.09|  0.07|
-|     3| Non-White Men   |  0.28|  0.18|  0.13|  0.07|  0.05|
-|     4| White Men       |  0.42|  0.18|  0.12|  0.06|  0.05|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.15 | 0.14 | 0.18 | 0.13 | 0.13 |
+|    2 | White Women     | 0.33 | 0.19 | 0.15 | 0.09 | 0.07 |
+|    3 | Non-White Men   | 0.29 | 0.18 | 0.13 | 0.07 | 0.05 |
+|    4 | White Men       | 0.43 | 0.18 | 0.12 | 0.06 | 0.05 |
 
 ``` r
 careerdata.upper<-UnproReviews %>%
@@ -870,15 +869,14 @@ careerdata.upper<-UnproReviews %>%
 kable(careerdata.upper, label = 'Aptitude upper probabilities', digits = 2, format = 'markdown')
 ```
 
-|  .row| intersect       |     1|     2|     3|     4|     5|
-|-----:|:----------------|-----:|-----:|-----:|-----:|-----:|
-|     1| Non-White Women |  0.30|  0.23|  0.25|  0.23|  0.28|
-|     2| White Women     |  0.43|  0.25|  0.22|  0.15|  0.13|
-|     3| Non-White Men   |  0.54|  0.25|  0.22|  0.16|  0.15|
-|     4| White Men       |  0.56|  0.25|  0.18|  0.11|  0.09|
+| .row | intersect       |    1 |    2 |    3 |    4 |    5 |
+| ---: | :-------------- | ---: | ---: | ---: | ---: | ---: |
+|    1 | Non-White Women | 0.30 | 0.23 | 0.25 | 0.23 | 0.28 |
+|    2 | White Women     | 0.43 | 0.25 | 0.22 | 0.15 | 0.13 |
+|    3 | Non-White Men   | 0.54 | 0.25 | 0.22 | 0.16 | 0.15 |
+|    4 | White Men       | 0.56 | 0.24 | 0.18 | 0.11 | 0.09 |
 
-What percent of people received more than one review
-====================================================
+# What percent of people received more than one review
 
 ``` r
  #what percent people recieved more than 1 unpro review
@@ -891,6 +889,21 @@ What percent of people received more than one review
 ```
 
     ## [1] 69.49153
+
+# What percent of people with unpro reviews had them in a journal with open review
+
+``` r
+ #what percent people recieved more than 1 unpro review
+ not2<-which(is.na(QCData$Q29))
+
+ notreview2<-QCData$Q29[-not2] 
+ 
+ openreview_table<-table(notreview2) 
+ (openreview_table[3]/sum(openreview_table))*100 #percent of unpro reviews in open review
+```
+
+    ##      Yes 
+    ## 2.941176
 
 ``` r
  #Career stage
