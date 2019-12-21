@@ -6,7 +6,9 @@
 
 ### Journal: *PeerJ*
 
-### Link: *in review*
+### Link: [https://peerj.com/articles/8247/](https://peerj.com/articles/8247/)
+
+Silbiger NJ, Stubler AD. 2019. Unprofessional peer reviews disproportionately harm underrepresented groups in STEM. PeerJ 7:e8247 https://doi.org/10.7717/peerj.8247
 
 
 ### Data and Scripts
